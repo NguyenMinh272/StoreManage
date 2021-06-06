@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <h1>Chi tiết đơn hàng</h1>
+</div>
+<br>
+<p>
+  <strong>Ngày bán:</strong>
+  <%= @invoice.date %>
+</p>
+
+<p>
+  <strong>Khách hàng:</strong>
+  <%= @invoice.customer&.name %>
+</p>
+
+<p>
+  <strong>Mã số thuế:</strong>
+  <%= @invoice.tax %>
+</p>
+
+<p>
+  <strong>Điện thoại:</strong>
+  <%= @invoice.phone %>
+</p>
+
+<p>
+  <strong>Người bán:</strong>
+  <%= @invoice.saleperson %>
+</p>
+
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Tên sản phẩm</th>
+      <th>Danh mục</th>
+      <th>Số lượng</th>
+      <th>Đơn giá</th>
+      <th>Thành tiền</th>
+      <th>Xóa</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% running_total = 0 %>
+    <% @purchases.each do |purchase| %>
+    <tr>
+      <td><h4><%= purchase.product %></h4></td>
+      <td><h4><%= purchase.category %></h4></td>
+      <td><h4><%= purchase.quantity %></h4></td>
+      <td><h4><%= (purchase.price).to_f %> VNĐ</h4></td>
+      <td><h4><%= (purchase.quantity * purchase.price).to_f %> VNĐ</h4></td>
+      <td><h4><%= link_to "Xóa", [@invoice, purchase], method: :delete, confirm: "Are you sure?"%></h4></td>
+      <% running_total = running_total + (purchase.quantity * purchase.price) %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+<br>
+<h4 class="pull-right">Tổng thành tiền: <%= (running_total).to_f %> VNĐ</h4>
+<br>
+<%= link_to 'Sửa', edit_invoice_path(@invoice), class:"btn btn-outline-warning", style:"margin-right:20px;"%> 
+
+<%= link_to 'Quay lại', invoices_path ,class:"btn btn-outline-primary", style:"margin-right:20px;" %>
+<%= link_to 'Thêm mới', new_invoice_purchase_path(@invoice),class:"btn btn-outline-primary" %>

@@ -1,0 +1,49 @@
+<%= form_for [@invoice, @purchase] do |form| %>
+  <% if purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+      <ul>
+        <% purchase.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <strong>Tên sản phẩm:</strong>
+    <div class="controls">
+    <%= form.text_field :product %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <strong>Danh mục:</strong>
+    <div class="controls">
+    <%= form.text_field :category %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <strong>Số lượng:</strong>
+    <div class="controls">
+    <%= form.text_field :quantity %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <strong>Đơn giá:</strong>
+    <div class="controls">
+    <%= form.text_field :price %>
+    </div>
+  </div>
+<br>
+
+  <div class="control-group">
+  <div class="actions">
+    <%= form.submit 'Tạo ', class: 'btn btn-primary'%>
+  </div>
+  </div>
+<% end %>
+<br>
